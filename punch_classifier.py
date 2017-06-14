@@ -23,14 +23,26 @@ test_labels = np.array(df_test['punch_type'])
 
 # create models
 clf_1 = svm.SVC()
+clf_2 = knn.KNeighborsClassifier(n_neighbors=len(test_labels) / 2)
 
 # train models
 clf_1.fit(training_features, training_labels)
+clf_2.fit(training_features, training_labels)
 
-# test models
+# test models:
+
+# support vector machine w/ rbf kernel
 predicted_punches = clf_1.predict(test_features)
 actual_punches = test_labels
 
 print(predicted_punches)
 print(actual_punches)
 print(mtr.accuracy_score(actual_punches, predicted_punches))
+
+# k nearest neighbors with half of all test neighbors being considered
+predicted_punches_2 = clf_2.predict(test_features)
+actual_punches_2 = test_labels
+
+print(predicted_punches_2)
+print(actual_punches)
+print(mtr.accuracy_score(actual_punches, predicted_punches_2))
